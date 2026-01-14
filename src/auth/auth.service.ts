@@ -44,6 +44,7 @@ export class AuthService {
       phoneNumber: user.phoneNumber,
       role: user.role,
       status: user.status,
+      organizationId: user.organizationId,
       createdAt: user.createdAt,
     };
   }
@@ -124,6 +125,7 @@ export class AuthService {
           phoneNumber: user.phoneNumber,
           role: user.role,
           status: user.status,
+          organizationId: user.organizationId,
           createdAt: user.createdAt,
         },
         accessToken,
@@ -143,6 +145,7 @@ export class AuthService {
         sub: user.id,
         email: user.email,
         role: user.role,
+        orgId: user.organizationId,
       };
 
       const accessTokenExporesIn =

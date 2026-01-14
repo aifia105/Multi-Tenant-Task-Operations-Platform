@@ -28,6 +28,9 @@ class User {
   @Column({ type: 'varchar', length: 255 })
   status: UserStatusType;
 
+  @Column({ type: 'uuid', nullable: false })
+  organizationId: string;
+
   @Column({ type: 'timestamp' })
   createdAt: Date;
 

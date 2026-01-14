@@ -27,6 +27,7 @@ export class UsersService {
         phoneNumber: user.phoneNumber,
         role: user.role,
         status: user.status,
+        organizationId: user.organizationId,
         createdAt: user.createdAt,
       };
     } catch (error) {

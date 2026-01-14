@@ -8,5 +8,6 @@ export type UserResponseType = {
   phoneNumber: string;
   role: UserRoleType;
   status: UserStatusType;
+  organizationId: string;
   createdAt: Date;
 };
