@@ -2,11 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
-import cookieParser from 'cookie-parser';
 import { ConfigService } from '@nestjs/config';
+import cookieParser from 'cookie-parser';
+import csurf from 'csurf';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const configService = app.get(ConfigService);
 
   const config = new DocumentBuilder()
     .setTitle('Task & Operations Platform')
@@ -18,11 +21,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  const configService = app.get(ConfigService);
-  const port = configService.get<number>('port');
+  const port = configService.get<number>('app.port');
 
   app.enableCors({
-    origin: configService.get<string>('allowedClient'),
+    origin: configService.get<string>('app.allowedClient'),
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
     allowedHeaders: 'Content-Type, Authorization',
@@ -35,6 +37,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.use(cookieParser());
+
+  app.use(csurf({ cookie: true }));
 
   await app.listen(port || 3000);
 

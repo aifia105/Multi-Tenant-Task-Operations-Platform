@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -8,6 +9,7 @@ import User from './schema/user.schema';
 import { Repository } from 'typeorm';
 import { UserResponseType } from './types/user-response.type';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserRole } from './enum/user-role.enum';
 
 @Injectable()
 export class UsersService {
@@ -18,6 +20,14 @@ export class UsersService {
 
   async createUser(createUserDto: CreateUserDto): Promise<UserResponseType> {
     try {
+      if (
+        createUserDto.role !== UserRole.ADMIN &&
+        !createUserDto.organizationId
+      ) {
+        throw new BadRequestException(
+          'Organization ID is required for non-admin users',
+        );
+      }
       const user = await this.userRepository.create(createUserDto);
       await this.userRepository.save(user);
       return {
