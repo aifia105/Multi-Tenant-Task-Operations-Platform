@@ -1,9 +1,9 @@
 import {
-  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import User from './schema/user.schema';
 import { Repository } from 'typeorm';
 import { UserResponseType } from './types/user-response.type';
@@ -12,7 +12,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject(User.name) private readonly userRepository: Repository<User>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<UserResponseType> {

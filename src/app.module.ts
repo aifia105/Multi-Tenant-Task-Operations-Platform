@@ -42,6 +42,7 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
       }),
       inject: [ConfigService],
     }),
+    // rate limit
     ThrottlerModule.forRoot({
       throttlers: [
         {
