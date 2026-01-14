@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { UserStatus } from '../enum/user-status.enum';
-import { UserRole } from '../enum/user-role.enum';
+import type { UserStatus, UserStatusType } from '../enum/user-status.enum';
+import type { UserRole, UserRoleType } from '../enum/user-role.enum';
 
 @Entity()
 class User {
@@ -16,23 +16,23 @@ class User {
   @Column({ type: 'varchar', length: 255 })
   fullName: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   address: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   phoneNumber: string;
 
-  @Column({ type: 'varchar', length: 255, enum: UserRole })
-  role: UserRole;
-
-  @Column({ type: 'varchar', length: 255, enum: UserStatus })
-  status: UserStatus;
+  @Column({ type: 'varchar', length: 255 })
+  role: UserRoleType;
 
   @Column({ type: 'varchar', length: 255 })
-  createdAt: string;
+  status: UserStatusType;
 
-  @Column({ type: 'varchar', length: 255 })
-  updatedAt: string;
+  @Column({ type: 'timestamp' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp' })
+  updatedAt: Date;
 }
 
 export default User;

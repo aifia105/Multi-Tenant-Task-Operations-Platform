@@ -8,4 +8,12 @@ export default () => ({
     database: process.env.DATABASE_NAME,
   },
   mongoUri: process.env.MONGO_URI,
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN,
+    refreshSecret: process.env.JWT_REFRESH_SECRET,
+    refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN,
+  },
+  allowedClient: process.env.ALLOWED_CLIENT,
+  saltRounds: parseInt(process.env.SALT_ROUNDS || '12', 10),
 });
