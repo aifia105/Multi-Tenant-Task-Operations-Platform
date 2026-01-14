@@ -20,7 +20,7 @@ COPY --from=dependencies /app/node_modules ./node_modules
 
 RUN pnpm build
 
-FROM base as prod-dependencies
+FROM base AS prod-dependencies
 
 WORKDIR /app
 
